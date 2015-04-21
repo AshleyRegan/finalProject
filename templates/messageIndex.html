@@ -1,0 +1,17 @@
+<html>
+  <head></head>
+  
+  <body>
+    <h1>Messages:</h1>
+    <ul>
+    {% for message in messages %}
+      <li>{{message.name}}: <a href="{{url_for('messageShow', msgId=message.id)}}">{{message.message}}</a></li>
+    {% endfor %}
+    </ul>
+    
+    <hr>
+    <a href="{{ url_for('messageNewHtml') }}">Create new message</a>
+    
+  </body>
+      
+    
