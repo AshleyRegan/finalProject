@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>My Messaging System</title>
+  </head>
+  
+  <body>
+    <h1>Messages:</h1>
+    <ul data-bind="foreach: messages">
+      <li>
+        <span data-bind="text: name"></span>
+        :
+        <span data-bind="text: message"></span>
+      </li>
+    </ul>
+    
+    <hr>
+    <input type="text" data-bind="value: name" placeholder="Name">
+    <br>
+    <input type="text" data-bind="value: message" placeholder="Message">
+    <br>
+    <button data-bind="click: newMessage">Post new message</button>
