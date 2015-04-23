@@ -16,7 +16,17 @@ class Message(db.Model):
     self.name = name
     self.message = message
     
+  def serialize(self):
+    return {'name': self.name, 'message': self.message}
+    
 db.create_all()
+
+def request_wants_json():
+    best = request.accept_mimetypes \
+        .best_match(['application/json', 'text/html'])
+    return best == 'application/json' and \
+        request.accept_mimetypes[best] > \
+        request.accept_mimetypes['text/html']
 
 @app.route('/')
 def index():
@@ -27,7 +37,10 @@ def index():
 def messageIndex():
   messages = Message.query.all()
   
-  return render_template('messageIndex.html', messages=messages)
+  if request_wants_json():
+    return jsonify({'messages': [msg.serialize() for msg in messages]})
+  else:
+    return render_template('messageIndex.html', messages=messages)
 
 @app.route('/msg', methods=['POST'])
 def messageCreate():
